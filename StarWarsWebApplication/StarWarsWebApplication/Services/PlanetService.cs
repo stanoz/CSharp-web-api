@@ -31,7 +31,7 @@ namespace StarWarsWebApplication.Services
             return allPlanets;
         }
 
-        public async Task<Planet> GetPlanetByIdAsync(int id)
+        public async Task<Planet> GetPlanetById(int id)
         {
             var allPlanets = await _dataContext.StarWarsPlanets.ToListAsync();
             if (allPlanets.IsNullOrEmpty())
