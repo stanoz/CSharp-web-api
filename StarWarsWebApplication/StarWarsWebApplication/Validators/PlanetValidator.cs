@@ -25,13 +25,6 @@ namespace StarWarsWebApplication.Validators
             if (planetDto.Climate.IsNullOrEmpty())
                 return false;
 
-            foreach (var _ in from item in planetDto.Climate
-                              where item.IsNullOrEmpty()
-                              select new { })
-            {
-                return false;
-            }
-
             if (planetDto.Climate.Any(item => item.IsNullOrEmpty()))
             {
                 return false;
@@ -42,13 +35,6 @@ namespace StarWarsWebApplication.Validators
 
             if (planetDto.Terrain.Any(item => item.IsNullOrEmpty()))
                 return false;
-
-            foreach (var _ in from item in planetDto.Terrain
-                              where item.IsNullOrEmpty() 
-                              select new { })
-            {
-                return false;
-            }
 
             return true;
         }
