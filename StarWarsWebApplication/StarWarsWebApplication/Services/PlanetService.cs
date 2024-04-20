@@ -5,6 +5,7 @@ using StarWarsWebApplication.Data;
 using StarWarsWebApplication.DTOs;
 using StarWarsWebApplication.Entities;
 using StarWarsWebApplication.Mappers;
+using StarWarsWebApplication.Validators;
 
 namespace StarWarsWebApplication.Services
 {
@@ -12,10 +13,12 @@ namespace StarWarsWebApplication.Services
     {
         private readonly DataContext _dataContext;
         private readonly IMappper _mapper;
-        public PlanetService(DataContext dataContext, IMappper mapper)
+        private readonly IPlanetValidate _planetValidate;
+        public PlanetService(DataContext dataContext, IMappper mapper, IPlanetValidate planetValidate)
         {
             _dataContext = dataContext;
             _mapper = mapper;
+            _planetValidate = planetValidate;
         }
 
         public async Task<ActionResult<IEnumerable<Planet>>> GetAllPlanets()
@@ -46,6 +49,11 @@ namespace StarWarsWebApplication.Services
         }
         public async Task<int> AddPlanet(PlanetDto planetDto)
         {
+            if (!_planetValidate.IsValid(planetDto))
+            {
+                throw new ArgumentException($"Planet {nameof(planetDto)} is invalid!");
+            }
+
             var planet = _mapper.MapToPlanet(planetDto);
             _dataContext.StarWarsPlanets.Add(planet);
             await _dataContext.SaveChangesAsync();
@@ -59,6 +67,11 @@ namespace StarWarsWebApplication.Services
             {
                 throw new ArgumentNullException(nameof(dbPlanet));
             }
+            if (!_planetValidate.IsValid(updatedPlanetDto))
+            {
+                throw new ArgumentException($"Planet {nameof(updatedPlanetDto)} is invalid!");
+            }
+
             dbPlanet = _mapper.MapToPlanet(updatedPlanetDto);
             dbPlanet.Id = id;
 
