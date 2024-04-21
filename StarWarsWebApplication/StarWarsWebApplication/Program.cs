@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using StarWarsWebApplication.Data;
+using StarWarsWebApplication.Mappers;
 using StarWarsWebApplication.Services;
+using StarWarsWebApplication.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IPlanetValidate, PlanetValidator>();
+builder.Services.AddScoped<IMappper, Mapper>();
 builder.Services.AddScoped<IPlanetService, PlanetService>();
 
 builder.Services.AddDbContext<DataContext>(
