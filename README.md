@@ -4,7 +4,7 @@ This project is a web API that shows statistics of Star Wars planets. Developed 
 
 ## Project Overview
 
-This project interacts with a public API to retrieve data, which is then transferred to a PostgreSQL database. The project provides an API to modify this data. It also includes a user interface for easier interaction with the system. Additionally, the project generates logs for monitoring and debugging purposes.
+The project provides an API to modify data that is stored in local database.
 
 ## Features
 
